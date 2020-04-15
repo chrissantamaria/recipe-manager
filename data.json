@@ -1,0 +1,32 @@
+// Consider two users user1 and user2
+// (in production will use actual Firebase UIDs)
+{
+  // "recipes" properties are randomized recipe IDs
+  "recipes": {
+    "hGiGGUy09": {
+      "author": "user1",
+      "title": "Kraft Mac and Cheese",
+      "content": "Just pop it into the microwave!"
+    },
+    "bPLw-CVDrB": {
+      "author": "user1",
+      "title": "Filet mignon",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ipsum nunc aliquet bibendum enim facilisis gravida neque. Ornare suspendisse sed nisi lacus. Lorem ipsum dolor sit amet consectetur adipiscing elit. Pellentesque dignissim enim sit amet venenatis urna cursus eget. Felis bibendum ut tristique et. Consequat mauris nunc congue nisi vitae suscipit. Magna fringilla urna porttitor rhoncus. Suspendisse sed nisi lacus sed viverra tellus in. Elementum curabitur vitae nunc sed. Tellus molestie nunc non blandit. A pellentesque sit amet porttitor eget dolor morbi non."
+    },
+    "4UWJX26EU": {
+      "author": "user2",
+      "title": "Toast",
+      "content": "Put some bread in the toaster and you're done!"
+    }
+  },
+  // Properties of each user represent the recipes added to their cookbooks
+  "cookbooks": {
+    "user1": {
+      "hGiGGUy09": true,
+      "4UWJX26EU": true
+    },
+    "user2": {
+      "4UWJX26EU": true
+    }
+  }
+}
