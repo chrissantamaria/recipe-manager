@@ -1,4 +1,5 @@
 import React from 'react';
+import { registerRootComponent } from 'expo';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -8,7 +9,7 @@ import RecipeScreen from './components/Recipe';
 
 const Stack = createStackNavigator();
 
-export default function App() {
+function App() {
   return (
     <NavigationContainer>
       <PaperProvider>
@@ -33,3 +34,5 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+export default registerRootComponent(App);
