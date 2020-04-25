@@ -15,8 +15,8 @@ export default function HomeScreen() {
         margin: 10,
       }}
     >
-      {recipes.map((recipe) => (
-        <ListItem {...recipe} />
+      {recipes.map((recipe, i) => (
+        <ListItem key={i} {...recipe} />
       ))}
     </View>
   );
