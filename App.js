@@ -21,7 +21,12 @@ export default function App() {
           <Stack.Screen
             name="Recipe"
             component={RecipeScreen}
-            options={({ route }) => ({ title: route.params.title })}
+            options={({ route }) => ({
+              title: route.params.title,
+              // Forcing title instead of potentially "Available Recipes"
+              // depending on recipe title length
+              headerBackTitle: 'Back',
+            })}
           />
         </Stack.Navigator>
       </PaperProvider>
