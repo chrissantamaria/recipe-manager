@@ -1,13 +1,14 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Card, Paragraph } from 'react-native-paper';
 
 export default function RecipeScreen({ route }) {
   const { author, title, content } = route.params;
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>{title}</Text>
-      <Text style={{ marginBottom: 15 }}>Submitted by {author}</Text>
-      <Text>{content}</Text>
-    </View>
+    <Card>
+      <Card.Title title={title} subtitle={`Submitted by ${author}`} />
+      <Card.Content>
+        <Paragraph>{content}</Paragraph>
+      </Card.Content>
+    </Card>
   );
 }
