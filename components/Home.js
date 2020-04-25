@@ -2,11 +2,14 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { List } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-
-import data from '../data.json';
-const recipes = Object.values(data.recipes);
+import { db } from '../firebase';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 export default function HomeScreen() {
+  const [recipes, loading] = useCollectionData(db.collection('recipes'), {
+    idField: 'id',
+  });
+
   return (
     <View
       style={{
@@ -15,9 +18,11 @@ export default function HomeScreen() {
         margin: 10,
       }}
     >
-      {recipes.map((recipe, i) => (
-        <ListItem key={i} {...recipe} />
-      ))}
+      {loading ? (
+        <React.Fragment />
+      ) : (
+        recipes.map(({ id, ...data }) => <ListItem key={id} {...data} />)
+      )}
     </View>
   );
 }
