@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { List } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
-import { db } from '../firebase';
+import { db } from '../../firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 export default function HomeScreen() {
