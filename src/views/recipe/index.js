@@ -2,7 +2,7 @@ import React, { useLayoutEffect } from 'react';
 import { Card, Paragraph } from 'react-native-paper';
 import { TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { db } from '../../firebase';
+import { db, storage } from '../../firebase';
 import { format as formatDate } from 'date-fns';
 
 export default function RecipeScreen({ route, navigation }) {
@@ -32,7 +32,16 @@ export default function RecipeScreen({ route, navigation }) {
       {
         text: 'OK',
         onPress: async () => {
-          await db.collection('recipes').doc(id).delete();
+          await Promise.all([
+            db.collection('recipes').doc(id).delete(),
+            storage
+              .ref()
+              .child(`recipes/${id}.jpg`)
+              .delete()
+              .catch(() =>
+                console.log(`Failed to delete photo for recipe ${id}`)
+              ),
+          ]);
           navigation.navigate('Home');
         },
       },

@@ -1,29 +1,22 @@
-import React, { useRef, useLayoutEffect } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import { View, TouchableOpacity, Alert } from 'react-native';
+import { Button, Text } from 'react-native-paper';
 import { OutlinedTextField } from 'react-native-material-textfield';
 import Icon from 'react-native-vector-icons/Feather';
 import firebase, { db, auth } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { getImageFromGallery, uploadPhoto } from './utils';
 
 export default function AddRecipeScreen({ navigation }) {
   const titleRef = useRef('');
   const contentRef = useRef('');
+  const [photoURI, setPhotoURI] = useState(null);
   const [user] = useAuthState(auth);
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity onPress={postRecipe}>
-          <Icon
-            name="check"
-            size={30}
-            color="#037cff"
-            style={{ marginRight: 15 }}
-          />
-        </TouchableOpacity>
-      ),
-    });
-  }, [navigation]);
+  const getURIFromGallery = async () => {
+    const uri = await getImageFromGallery();
+    setPhotoURI(uri);
+  };
 
   const postRecipe = async () => {
     const title = titleRef.current.value();
@@ -34,7 +27,7 @@ export default function AddRecipeScreen({ navigation }) {
       return;
     }
 
-    await db.collection('recipes').add({
+    const { id } = await db.collection('recipes').add({
       author: {
         uid: user.uid,
         name: user.displayName,
@@ -43,6 +36,10 @@ export default function AddRecipeScreen({ navigation }) {
       content,
       created: firebase.firestore.Timestamp.now(),
     });
+
+    if (photoURI) await uploadPhoto({ id, uri: photoURI, uid: user.uid });
+    else console.log('No photo URI, skipping upload');
+
     navigation.navigate('Home');
   };
 
@@ -67,6 +64,10 @@ export default function AddRecipeScreen({ navigation }) {
         }
         multiline
       />
+      <Button onPress={getURIFromGallery}>
+        {!photoURI ? 'Choose photo' : 'Change photo'}
+      </Button>
+      <Button onPress={postRecipe}>Save recipe</Button>
     </View>
   );
 }

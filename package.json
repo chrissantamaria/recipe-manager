@@ -14,6 +14,7 @@
     "date-fns": "^2.12.0",
     "expo": "~37.0.3",
     "expo-facebook": "^8.1.0",
+    "expo-image-picker": "~8.1.0",
     "expo-secure-store": "^8.1.0",
     "firebase": "7.9.0",
     "react": "~16.9.0",

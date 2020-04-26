@@ -1,0 +1,9 @@
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /recipes/{recipe} {
+      allow read, create: if request.auth != null;
+      allow update, delete: if request.auth.uid == resource.metadata.owner; 
+    }
+  }
+}
+
