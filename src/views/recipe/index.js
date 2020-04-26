@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from 'react';
 import { Card, Paragraph } from 'react-native-paper';
-import { TouchableOpacity, Alert } from 'react-native';
+import { TouchableOpacity, Alert, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { db, storage } from '../../firebase';
 import { format as formatDate } from 'date-fns';
@@ -50,16 +50,20 @@ export default function RecipeScreen({ route, navigation }) {
 
   return (
     <Card>
-      <Card.Title
-        title={title}
-        subtitle={`Submitted by ${author.name} on ${formatDate(
-          created,
-          'M/d/yy'
-        )}`}
-      />
-      <Card.Content>
-        <Paragraph>{content}</Paragraph>
-      </Card.Content>
+      <ScrollView style={{ margin: 10 }}>
+        <Card.Title
+          title={title}
+          subtitle={`Submitted by ${author.name}\n${formatDate(
+            created,
+            'M/d/yy'
+          )}`}
+          subtitleNumberOfLines={2}
+          style={{ marginBottom: 20 }}
+        />
+        <Card.Content>
+          <Paragraph>{content}</Paragraph>
+        </Card.Content>
+      </ScrollView>
     </Card>
   );
 }
