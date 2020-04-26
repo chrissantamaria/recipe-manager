@@ -33,7 +33,7 @@ function ListItem(recipe) {
     <TouchableOpacity onPress={() => navigation.navigate('Recipe', recipe)}>
       <List.Item
         title={recipe.title}
-        description={`Submitted by ${recipe.author}`}
+        description={`Submitted by ${recipe.author.name}`}
       />
     </TouchableOpacity>
   );
