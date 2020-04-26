@@ -1,12 +1,14 @@
 import React, { useLayoutEffect } from 'react';
 import { Card, Paragraph } from 'react-native-paper';
-import { TouchableOpacity, Alert, ScrollView } from 'react-native';
+import { TouchableOpacity, Alert, ScrollView, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { db, storage } from '../../firebase';
+import { useDownloadURL } from 'react-firebase-hooks/storage';
 import { format as formatDate } from 'date-fns';
 
 export default function RecipeScreen({ route, navigation }) {
   const { author, title, content, id, created } = route.params;
+  const [photoURL, loading] = useDownloadURL(storage.ref(`recipes/${id}.jpg`));
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -48,12 +50,14 @@ export default function RecipeScreen({ route, navigation }) {
     ]);
   };
 
+  if (loading) return <React.Fragment />;
   return (
-    <Card>
-      <ScrollView style={{ margin: 10 }}>
+    <ScrollView>
+      {photoURL && <Card.Cover source={{ uri: photoURL }} />}
+      <View style={{ marginTop: 10, marginBottom: 20 }}>
         <Card.Title
           title={title}
-          subtitle={`Submitted by ${author.name}\n${formatDate(
+          subtitle={`Submitted by ${author.name}\nPublished ${formatDate(
             created,
             'M/d/yy'
           )}`}
@@ -63,7 +67,7 @@ export default function RecipeScreen({ route, navigation }) {
         <Card.Content>
           <Paragraph>{content}</Paragraph>
         </Card.Content>
-      </ScrollView>
-    </Card>
+      </View>
+    </ScrollView>
   );
 }
