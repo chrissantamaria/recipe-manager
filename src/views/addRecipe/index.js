@@ -1,8 +1,7 @@
-import React, { useState, useRef, useLayoutEffect } from 'react';
-import { View, TouchableOpacity, Alert } from 'react-native';
-import { Button, Text } from 'react-native-paper';
+import React, { useState, useRef } from 'react';
+import { Alert, ScrollView } from 'react-native';
+import { Button } from 'react-native-paper';
 import { OutlinedTextField } from 'react-native-material-textfield';
-import Icon from 'react-native-vector-icons/Feather';
 import firebase, { db, auth } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getImageFromGallery, uploadPhoto } from './utils';
@@ -44,7 +43,7 @@ export default function AddRecipeScreen({ navigation }) {
   };
 
   return (
-    <View
+    <ScrollView
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -68,6 +67,6 @@ export default function AddRecipeScreen({ navigation }) {
         {!photoURI ? 'Choose photo' : 'Change photo'}
       </Button>
       <Button onPress={postRecipe}>Save recipe</Button>
-    </View>
+    </ScrollView>
   );
 }
