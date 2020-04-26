@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, ScrollView } from 'react-native';
 import { List } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { db } from '../../firebase';
@@ -21,7 +21,11 @@ export default function HomeScreen() {
       {loading ? (
         <React.Fragment />
       ) : (
-        recipes.map(({ id, ...data }) => <ListItem key={id} {...data} />)
+        <ScrollView style={{ minHeight: '100%' }}>
+          {recipes.map(({ id, ...data }) => (
+            <ListItem key={id} {...data} />
+          ))}
+        </ScrollView>
       )}
     </View>
   );
