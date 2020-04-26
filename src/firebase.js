@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import 'firebase/firestore';
+import 'firebase/auth';
 
 import {
   FIREBASE_API_KEY,
@@ -17,3 +18,4 @@ firebase.initializeApp({
 
 export default firebase;
 export const db = firebase.firestore();
+export const auth = firebase.auth();
