@@ -4,6 +4,9 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import Router from './Router';
 import AuthHandler from './views/auth';
 
+// Hide warning boxes in Expo client
+console.disableYellowBox = true;
+
 function App() {
   return (
     <PaperProvider>
