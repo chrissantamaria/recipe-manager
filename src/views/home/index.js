@@ -10,24 +10,19 @@ export default function HomeScreen() {
     idField: 'id',
   });
 
+  if (loading) return <React.Fragment />;
   return (
-    <View
+    <ScrollView
       style={{
         display: 'flex',
         flexDirection: 'column',
         margin: 10,
       }}
     >
-      {loading ? (
-        <React.Fragment />
-      ) : (
-        <ScrollView style={{ minHeight: '100%' }}>
-          {recipes.map(({ id, ...data }) => (
-            <ListItem key={id} {...data} />
-          ))}
-        </ScrollView>
-      )}
-    </View>
+      {recipes.map(({ id, ...data }) => (
+        <ListItem key={id} {...data} />
+      ))}
+    </ScrollView>
   );
 }
 
