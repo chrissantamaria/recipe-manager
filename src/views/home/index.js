@@ -1,6 +1,11 @@
 import React from 'react';
-import { View, TouchableOpacity, ScrollView } from 'react-native';
-import { List } from 'react-native-paper';
+import {
+  View,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
+import { List, Title } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { db } from '../../firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
@@ -10,7 +15,20 @@ export default function HomeScreen() {
     idField: 'id',
   });
 
-  if (loading) return <React.Fragment />;
+  if (loading)
+    return (
+      <View
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '30%',
+        }}
+      >
+        <Title style={{ marginBottom: 10 }}>Loading recipes...</Title>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
   return (
     <ScrollView
       style={{
