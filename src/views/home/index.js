@@ -1,14 +1,9 @@
 import React from 'react';
-import {
-  View,
-  TouchableOpacity,
-  ScrollView,
-  ActivityIndicator,
-} from 'react-native';
-import { List, Title } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
+import { View, ScrollView, ActivityIndicator } from 'react-native';
+import { Title } from 'react-native-paper';
 import { db } from '../../firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import ListItem from './ListItem';
 
 export default function HomeScreen() {
   const [recipes, loading] = useCollectionData(db.collection('recipes'), {
@@ -41,17 +36,5 @@ export default function HomeScreen() {
         <ListItem key={id} {...data} />
       ))}
     </ScrollView>
-  );
-}
-
-function ListItem(recipe) {
-  const navigation = useNavigation();
-  return (
-    <TouchableOpacity onPress={() => navigation.navigate('Recipe', recipe)}>
-      <List.Item
-        title={recipe.title}
-        description={`Submitted by ${recipe.author.name}`}
-      />
-    </TouchableOpacity>
   );
 }
