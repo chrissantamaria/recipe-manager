@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from './views/home';
 import RecipeScreen from './views/recipe';
+import AddRecipeScreen from './views/addRecipe';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,11 @@ export default function Router() {
             // depending on recipe title length
             headerBackTitle: 'Back',
           })}
+        />
+        <Stack.Screen
+          name="Add Recipe"
+          component={AddRecipeScreen}
+          options={{ title: 'Add Recipe' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
