@@ -3,9 +3,10 @@ import { Card, Paragraph } from 'react-native-paper';
 import { TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { db } from '../../firebase';
+import { format as formatDate } from 'date-fns';
 
 export default function RecipeScreen({ route, navigation }) {
-  const { author, title, content, id } = route.params;
+  const { author, title, content, id, created } = route.params;
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -40,7 +41,13 @@ export default function RecipeScreen({ route, navigation }) {
 
   return (
     <Card>
-      <Card.Title title={title} subtitle={`Submitted by ${author.name}`} />
+      <Card.Title
+        title={title}
+        subtitle={`Submitted by ${author.name} on ${formatDate(
+          created,
+          'M/d/yy'
+        )}`}
+      />
       <Card.Content>
         <Paragraph>{content}</Paragraph>
       </Card.Content>
