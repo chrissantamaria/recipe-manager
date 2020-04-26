@@ -53,8 +53,8 @@ export default function HomeScreen({ navigation }) {
         margin: 10,
       }}
     >
-      {recipes.map(({ id, ...data }) => (
-        <ListItem key={id} {...data} />
+      {recipes.map((recipe) => (
+        <ListItem key={recipe.id} {...recipe} />
       ))}
     </ScrollView>
   );
