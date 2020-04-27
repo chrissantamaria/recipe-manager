@@ -1,8 +1,9 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
-import { Alert, ScrollView, TouchableOpacity } from 'react-native';
-import { Button, Card } from 'react-native-paper';
+import { Alert, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Button, Card, Text } from 'react-native-paper';
 import { OutlinedTextField } from 'react-native-material-textfield';
-import Icon from 'react-native-vector-icons/Feather';
+import FeatherIcon from 'react-native-vector-icons/Feather';
+import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import firebase, { db, auth } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getImageFromGallery, uploadPhoto } from './utils';
@@ -17,7 +18,7 @@ export default function AddRecipeScreen({ navigation }) {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity onPress={postRecipe}>
-          <Icon
+          <FeatherIcon
             name="check"
             size={30}
             color="#037cff"
@@ -63,24 +64,32 @@ export default function AddRecipeScreen({ navigation }) {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        padding: 20,
       }}
     >
-      <OutlinedTextField
-        ref={titleRef}
-        label="Title"
-        containerStyle={{ marginBottom: 20 }}
-      />
-      <OutlinedTextField
-        ref={contentRef}
-        label="Content"
-        placeholder={'You can entire multiple lines for your recipe.'}
-        multiline
-      />
-      <Button onPress={getURIFromGallery}>
-        {!photoURI ? 'Choose photo' : 'Change photo'}
-      </Button>
-      {photoURI && <Card.Cover source={{ uri: photoURI }} />}
+      <View style={{ padding: 20 }}>
+        <OutlinedTextField
+          ref={titleRef}
+          label="Title"
+          containerStyle={{ marginBottom: 20 }}
+        />
+        <OutlinedTextField
+          ref={contentRef}
+          label="Content"
+          placeholder={'You can entire multiple lines for your recipe.'}
+          multiline
+          containerStyle={{ marginBottom: 20 }}
+        />
+        <Button
+          mode="contained"
+          icon={(props) => <IoniconsIcon name="md-photos" {...props} />}
+          onPress={getURIFromGallery}
+        >
+          {!photoURI ? 'Choose photo' : 'Change photo'}
+        </Button>
+        {photoURI && (
+          <Card.Cover source={{ uri: photoURI }} style={{ marginTop: 10 }} />
+        )}
+      </View>
     </ScrollView>
   );
 }
