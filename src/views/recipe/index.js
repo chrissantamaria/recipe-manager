@@ -6,11 +6,13 @@ import { db, storage, auth } from '../../firebase';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { format as formatDate } from 'date-fns';
+import useLoading from '../../components/LoadingProvider';
 
 export default function RecipeScreen({ route, navigation }) {
   const { author, title, content, id, created } = route.params;
   const [photoURL, loading] = useDownloadURL(storage.ref(`recipes/${id}.jpg`));
   const [user] = useAuthState(auth);
+  const { setLoading } = useLoading();
 
   useLayoutEffect(() => {
     if (user && user.uid === author.uid) {
@@ -38,6 +40,8 @@ export default function RecipeScreen({ route, navigation }) {
       {
         text: 'OK',
         onPress: async () => {
+          setLoading(true);
+
           await Promise.all([
             db.collection('recipes').doc(id).delete(),
             storage
@@ -48,6 +52,8 @@ export default function RecipeScreen({ route, navigation }) {
                 console.log(`Failed to delete photo for recipe ${id}`)
               ),
           ]);
+
+          setLoading(false);
           navigation.navigate('Home');
         },
       },

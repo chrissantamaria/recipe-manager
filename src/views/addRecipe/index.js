@@ -7,12 +7,14 @@ import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import firebase, { db, auth } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getImageFromGallery, uploadPhoto } from './utils';
+import useLoading from '../../components/LoadingProvider';
 
 export default function AddRecipeScreen({ navigation }) {
   const titleRef = useRef('');
   const contentRef = useRef('');
   const [photoURI, setPhotoURI] = useState(null);
   const [user] = useAuthState(auth);
+  const { setLoading } = useLoading();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -35,6 +37,8 @@ export default function AddRecipeScreen({ navigation }) {
   };
 
   const postRecipe = async () => {
+    setLoading(true);
+
     const title = titleRef.current.value();
     const content = contentRef.current.value();
 
@@ -56,6 +60,7 @@ export default function AddRecipeScreen({ navigation }) {
     if (photoURI) await uploadPhoto({ id, uri: photoURI, uid: user.uid });
     else console.log('No photo URI, skipping upload');
 
+    setLoading(false);
     navigation.navigate('Home');
   };
 
