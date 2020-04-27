@@ -54,3 +54,9 @@ yarn start
 yarn ios
 yarn android
 ```
+
+Format with Prettier:
+
+```bash
+yarn prettier
+```
