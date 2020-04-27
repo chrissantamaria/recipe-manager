@@ -62,7 +62,7 @@ export default function RecipeScreen({ route, navigation }) {
 
   if (loading) return <React.Fragment />;
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       {photoURL && <Card.Cover source={{ uri: photoURL }} />}
       <View style={{ marginTop: 10, marginBottom: 20 }}>
         <Card.Title

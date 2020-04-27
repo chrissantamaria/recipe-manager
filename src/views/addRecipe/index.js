@@ -66,6 +66,7 @@ export default function AddRecipeScreen({ navigation }) {
 
   return (
     <ScrollView
+      showsVerticalScrollIndicator={false}
       style={{
         display: 'flex',
         flexDirection: 'column',

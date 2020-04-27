@@ -41,6 +41,7 @@ export default function HomeScreen({ navigation }) {
   if (loading) return <React.Fragment />;
   return (
     <ScrollView
+      showsVerticalScrollIndicator={false}
       style={{
         display: 'flex',
         flexDirection: 'column',
