@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react';
-import { Alert, ScrollView } from 'react-native';
+import React, { useState, useRef, useLayoutEffect } from 'react';
+import { Alert, ScrollView, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
 import { OutlinedTextField } from 'react-native-material-textfield';
+import Icon from 'react-native-vector-icons/Feather';
 import firebase, { db, auth } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getImageFromGallery, uploadPhoto } from './utils';
@@ -11,6 +12,21 @@ export default function AddRecipeScreen({ navigation }) {
   const contentRef = useRef('');
   const [photoURI, setPhotoURI] = useState(null);
   const [user] = useAuthState(auth);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={postRecipe}>
+          <Icon
+            name="check"
+            size={30}
+            color="#037cff"
+            style={{ marginRight: 15 }}
+          />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, postRecipe, photoURI]);
 
   const getURIFromGallery = async () => {
     const uri = await getImageFromGallery();
@@ -58,15 +74,12 @@ export default function AddRecipeScreen({ navigation }) {
       <OutlinedTextField
         ref={contentRef}
         label="Content"
-        placeholder={
-          'Enter your recipe here!\n\nYou can entire multiple lines as well.'
-        }
+        placeholder={'You can entire multiple lines for your recipe.'}
         multiline
       />
       <Button onPress={getURIFromGallery}>
         {!photoURI ? 'Choose photo' : 'Change photo'}
       </Button>
-      <Button onPress={postRecipe}>Save recipe</Button>
     </ScrollView>
   );
 }
