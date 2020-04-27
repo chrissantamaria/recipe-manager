@@ -1,8 +1,8 @@
 # Recipe Manager
 
-<div style="text-align:center">
+<p align="center">
   <img style="max-height: 500px" src="https://i.imgur.com/7050MqH.png">
-</div>
+</p>
 
 A React Native app to manage personal recipes and view published recipes from others on the platform. Built as a final project for UVA's CS4720 Mobile Development in React course and as a demo to demonstrate various Firebase features.
 
