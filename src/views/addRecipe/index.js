@@ -1,6 +1,6 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
 import { Alert, ScrollView, TouchableOpacity } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, Card } from 'react-native-paper';
 import { OutlinedTextField } from 'react-native-material-textfield';
 import Icon from 'react-native-vector-icons/Feather';
 import firebase, { db, auth } from '../../firebase';
@@ -80,6 +80,7 @@ export default function AddRecipeScreen({ navigation }) {
       <Button onPress={getURIFromGallery}>
         {!photoURI ? 'Choose photo' : 'Change photo'}
       </Button>
+      {photoURI && <Card.Cover source={{ uri: photoURI }} />}
     </ScrollView>
   );
 }
