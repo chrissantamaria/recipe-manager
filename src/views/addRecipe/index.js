@@ -81,7 +81,7 @@ export default function AddRecipeScreen({ navigation }) {
         <OutlinedTextField
           ref={contentRef}
           label="Content"
-          placeholder={'You can entire multiple lines for your recipe.'}
+          placeholder={'You can enter multiple lines for your recipe.'}
           multiline
           containerStyle={{ marginBottom: 20 }}
         />
