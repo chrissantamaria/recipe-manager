@@ -2,28 +2,32 @@ import React, { useLayoutEffect } from 'react';
 import { Card, Paragraph } from 'react-native-paper';
 import { TouchableOpacity, Alert, ScrollView, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { db, storage } from '../../firebase';
+import { db, storage, auth } from '../../firebase';
 import { useDownloadURL } from 'react-firebase-hooks/storage';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { format as formatDate } from 'date-fns';
 
 export default function RecipeScreen({ route, navigation }) {
   const { author, title, content, id, created } = route.params;
   const [photoURL, loading] = useDownloadURL(storage.ref(`recipes/${id}.jpg`));
+  const [user] = useAuthState(auth);
 
   useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity onPress={deleteRecipe}>
-          <Icon
-            name="delete"
-            size={30}
-            color="#037cff"
-            style={{ marginRight: 15 }}
-          />
-        </TouchableOpacity>
-      ),
-    });
-  }, [navigation]);
+    if (user && user.uid === author.uid) {
+      navigation.setOptions({
+        headerRight: () => (
+          <TouchableOpacity onPress={deleteRecipe}>
+            <Icon
+              name="delete"
+              size={30}
+              color="#037cff"
+              style={{ marginRight: 15 }}
+            />
+          </TouchableOpacity>
+        ),
+      });
+    }
+  }, [navigation, user]);
 
   const deleteRecipe = () => {
     Alert.alert('Are you sure?', 'This will delete the recipe for all users.', [
