@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import {
   View,
   ScrollView,
@@ -10,11 +10,18 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { db } from '../../firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import ListItem from './ListItem';
+import useLoading from '../../components/LoadingProvider';
 
 export default function HomeScreen({ navigation }) {
   const [recipes, loading] = useCollectionData(db.collection('recipes'), {
     idField: 'id',
   });
+
+  // Keeping Firestore loading indicator in sync with global loading indicator
+  const { setLoading } = useLoading();
+  useEffect(() => {
+    setLoading(loading);
+  }, [loading]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -31,20 +38,7 @@ export default function HomeScreen({ navigation }) {
     });
   }, [navigation]);
 
-  if (loading)
-    return (
-      <View
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '30%',
-        }}
-      >
-        <Title style={{ marginBottom: 10 }}>Loading recipes...</Title>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
+  if (loading) return <React.Fragment />;
   return (
     <ScrollView
       style={{
