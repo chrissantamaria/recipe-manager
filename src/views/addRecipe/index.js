@@ -47,7 +47,7 @@ export default function AddRecipeScreen({ navigation }) {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        margin: 20,
+        padding: 20,
       }}
     >
       <OutlinedTextField
